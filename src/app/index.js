@@ -1,71 +1,24 @@
-/**
- * Created by hieutt on 03/05/2017.
- */
 import React from "react";
-import { render } from "react-dom";
+import {render} from "react-dom";
+import {Router, Route, browserHistory, IndexRoute} from "react-router";
 
-import { Header } from "./components/Header";
-import { Home } from "./components/Home";
+import {Root} from "./components/Root";
+import {Home} from "./components/Home";
+import {User} from "./components/User";
 
 class App extends React.Component {
-
-    constructor(){
-        super();
-        this.state = {
-          homeLink : "Home",
-          homeMounted: true
-        };
-    }
-
-    onGreet(){
-        alert("Hello!");
-    }
-
-    onChangeLinkName(newName){
-        this.setState({
-            homeLink : newName
-        });
-    }
-
-    onChangeHomeMounted(){
-        this.setState({
-            homeMounted : !this.state.homeMounted
-        });
-    }
-
     render() {
-        let homeCpn = "";
-        if(this.state.homeMounted){
-            homeCpn = (
-                <Home
-                    name={"Max"}
-                    initialAge={27}
-                    greet={this.onGreet}
-                    changeLink={this.onChangeLinkName.bind(this)}
-                    initialLinkName={this.state.homeLink}
-                ></Home>
-            );
-        }
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-xs-10 col-xs-offset-1">
-                        <Header homeLink={this.state.homeLink}></Header>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xs-10 col-xs-offset-1">
-                        {homeCpn}
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xs-10 col-xs-offset-1">
-                        <button onClick={()=> this.onChangeHomeMounted()} className="btn btn-primary"> (Un)mount Home Compoent</button>
-                    </div>
-                </div>
-            </div>
+            <Router history={browserHistory}>
+                <Route path={"/"} component={Root}>
+                    <IndexRoute component={Home}></IndexRoute>
+                    <Route path={"user/:id"} component={User}></Route>
+                    <Route path={"home"} component={Home}></Route>
+                </Route>
+                <Route path={"home-single"} component={Home}></Route>
+            </Router>
         );
     }
 }
 
-render(<App/>, window.document.getElementById("app"));
+render(<App />, window.document.getElementById('app'));

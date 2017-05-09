@@ -1,7 +1,5 @@
-/**
- * Created by hieutt on 04/05/2017.
- */
 import React from "react";
+import {Link} from "react-router";
 
 export const Header = (props) => {
     return (
@@ -9,7 +7,8 @@ export const Header = (props) => {
             <div className="container">
                 <div className="navbar-header">
                     <ul className="nav navbar-nav">
-                        <li><a href="#">{props.homeLink}</a></li>
+                        <li><Link to={"/home"} activeStyle={{color: "red"}}>Home</Link></li>
+                        <li><Link to={"/user/10"} activeClassName={"active"}>User</Link></li>
                     </ul>
                 </div>
             </div>
